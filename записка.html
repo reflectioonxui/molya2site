@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>14 февраля ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: linear-gradient(180deg, #ff4e7a, #ff9eb5);
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  padding: 30px 20px 60px;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+  margin-bottom: 18px;
+  animation: floatTitle 3s ease-in-out infinite;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay старт */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.22), rgba(0,0,0,0.35));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.overlay h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 44px;
+  margin-bottom: 10px;
+}
+
+.overlay p {
+  font-size: 15px;
+  opacity: 0.92;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.start-btn {
+  appearance: none;
+  border: 0;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: #fff;
+  color: #ff3f72;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transform: translateZ(0);
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.start-btn:active { transform: scale(0.97); background: #ffe3ea; }
+
+.small-note {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Сердечки */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatHearts 8s linear infinite;
+  opacity: 0.75;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes floatHearts {
+  0%   { transform: translateY(0) rotate(0deg);   opacity: 0.85; }
+  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatTitle {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-5px); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Стартовый экран (нужен, чтобы звук включался сразу) -->
+<div class="overlay" id="overlay">
+  <h2>С 14 февраля эм</h2>
+  <p>Нажми кнопку — включу звук и начну видео.</p>
+  <button class="start-btn" id="startBtn">▶️ Включить звук</button>
+</div>
+
+<div class="container">
+  <h1>С 14 февраля!</h1>
+
+  <div class="video-wrapper">
+    <video id="vid" controls playsinline preload="metadata">
+      <source src="202602161116.mp4" type="video/mp4">
+      Твой браузер не поддерживает видео.
+    </video>
+  </div>
+</div>
+
+<script>
+const vid = document.getElementById('vid');
+const overlay = document.getElementById('overlay');
+const startBtn = document.getElementById('startBtn');
+
+startBtn.addEventListener('click', async () => {
+  try {
+    vid.muted = false;          // снимаем mute
+    vid.volume = 1.0;
+    await vid.play();           // запуск с user gesture
+    overlay.style.display = 'none';
+  } catch (e) {
+    // если браузер всё равно упёрся, оставим controls и подскажем
+    startBtn.textContent = 'Нажми ▶️ на видео';
+  }
+});
+
+// Генерация сердечек
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random() * 20) + "px";
+  heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
